@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            border: 1px solid skyblue;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .error {
+            background-color: pink;
+        }
+        
+        .font {
+            font-size: 28px;
+        }
+        
+        .base {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>對象綁定與陣列綁定可同時使用</h3>
+        <p>v-bind:class="[activeName,errorName,{font:IsFont}]</p>
+        <div v-bind:class="[activeName,errorName,{font:IsFont}]">
+            測試樣式綁定
+        </div>
+
+        <hr>
+        <h3>class綁定值可以簡化操作</h3>
+        <p>v-bind:class="arrClass"</p>
+        <div v-bind:class="arrClass">
+            測試樣式綁定
+        </div>
+        <p>v-bind:class="objClass"</p>
+        <div v-bind:class="objClass">
+            測試樣式綁定
+        </div>
+
+        <hr>
+        <h3>默認class會保留</h3>
+        <p>class="base" v-bind:class="[activeName,errorName,{font:IsFont}]"</p>
+        <div class="base" v-bind:class="[activeName,errorName,{font:IsFont}]">
+            測試樣式綁定
+        </div>
+    </div>
+
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                activeName: "active",
+                errorName: "error",
+                arrClass: ["active", "error"],
+                objClass: {
+                    active: true,
+                    error: true
+                },
+                IsFont: true
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>

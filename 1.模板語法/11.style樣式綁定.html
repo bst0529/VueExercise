@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h3>對象語法</h3>
+        <p>v-bind:style="{border:borderStyle,width:widthStyle,height:heightStryle}"</p>
+        <div v-bind:style="{border:borderStyle,width:widthStyle,height:heightStryle}">
+            測試樣式綁定
+        </div>
+        <h5>簡化寫法</h5>
+        <p>v-bind:style="objStyles"</p>
+        <div v-bind:style="objStyles">
+            測試樣式綁定
+        </div>
+
+        <h3>陣列語法</h3>
+        <p>v-bind:style="[objStyles,overrideStyles]"</p>
+        <div v-bind:style="[objStyles,overrideStyles]">
+            測試樣式綁定
+        </div>
+    </div>
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                borderStyle: "1px solid #333",
+                widthStyle: "200px",
+                heightStryle: "100px",
+                objStyles: {
+                    border: "1px solid orange",
+                    width: "100px",
+                    height: "200px"
+                },
+                overrideStyles: {
+                    border: "3px solid purple",
+                    height: "100px"
+                }
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>

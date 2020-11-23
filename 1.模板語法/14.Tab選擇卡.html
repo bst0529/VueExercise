@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .clearFix::after {
+            content: "";
+            display: block;
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+        
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        
+        .tab li {
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-right: none;
+            cursor: pointer;
+        }
+        
+        .tab li,
+        .showImgs li {
+            float: left;
+        }
+        
+        .showImgs li {
+            display: none;
+        }
+        
+        .tab li:last-child {
+            border-right: 1px solid #333;
+        }
+        
+        .current {
+            background-color: orange;
+        }
+        
+        li.currentImg {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul class="tab clearFix">
+            <li @click="handle(index)" :class="newIndex==index ? 'current' : ''" :key="item.id" v-for="(item,index) in imgs">{{item.name}}</li>
+        </ul>
+        <ul class="showImgs">
+            <li :class="newIndex==index ? 'currentImg' : '' " v-for="(item,index) in imgs">
+                <img :src="item.src">
+            </li>
+        </ul>
+    </div>
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                newIndex: 0,
+                imgs: [{
+                    "id": 1,
+                    "name": "applye",
+                    "src": "./img/apple.png"
+                }, {
+                    "id": 2,
+                    "name": "orange",
+                    "src": "./img/orange.png"
+                }, {
+                    "id": 3,
+                    "name": "lemon",
+                    "src": "./img/lemon.png"
+                }]
+            },
+            methods: {
+                handle: function(index) {
+                    this.newIndex = index;
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

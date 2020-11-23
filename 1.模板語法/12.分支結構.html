@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h3>分支結構</h3>
+        <ul>
+            <li>v-if</li>
+            <li>v-else-if</li>
+            <li>v-else</li>
+            <li>v-show</li>
+        </ul>
+        <h3>v-if</h3>
+        <div>Score：<input type="text" v-model="score"></div>
+        <p>v-if="score>=90"</p>
+        <p>v-else-if="score
+            <90 && score>=80"</p>
+        <p>v-else-if="score
+            <80 && score>=70"</p>
+        <p>v-else-if="score
+            <70 && score>=60"</p>
+        <p>v-else</p>
+        <div v-if="score>=90">{{score}}：屬於優秀</div>
+        <div v-else-if="score<90 && score>=80">{{score}}：屬於次等優秀</div>
+        <div v-else-if="score<80 && score>=70">{{score}}：屬於末等等優秀</div>
+        <div v-else-if="score<70 && score>=60">{{score}}：屬於一般</div>
+        <div v-else>{{score}}屬於劣等</div>
+
+        <h3>v-show</h3>
+        <div>flag：{{flag}}</div>
+        <div v-show="flag">測試內容</div>
+        <button type="button" v-on:click="handle">切換</button>
+
+        <h3>v-if與v-show的不同</h3>
+        <ul>
+            <li>v-if：控制元素是否渲染到頁面</li>
+            <li>v-show：已否渲染到頁面，決定是否顯示</li>
+        </ul>
+    </div>
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                score: 95,
+                flag: true
+            },
+            methods: {
+                handle: function() {
+                    this.flag = !this.flag;
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

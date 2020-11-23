@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <form accept="">
+            <p>v-on:keyup.delete="handleDelete"</p>
+            使用者：<input type="text" v-model="uname" v-on:keyup.delete="handleDelete"> <br>
+            <p>v-on:keyup.enter="handleSubmit"</p>
+            密碼:<input type="text" v-model="pwd" v-on:keyup.enter="handleSubmit"><br>
+            <button type="button" v-on:click="handleSubmit">送出</button>
+        </form>
+    </div>
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                uname: "aaa",
+                pwd: "bbb"
+            },
+            methods: {
+                handleSubmit: function() {
+                    console.log(this.uname, this.pwd);
+                },
+                handleDelete: function() {
+                    this.uname = "";
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

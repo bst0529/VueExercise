@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active {
+            border: 1px solid skyblue;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .error {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h3>對象語法</h3>
+        <p>v-bind:class="{active:IsActive,error:IsError}"</p>
+        <div v-bind:class="{active:IsActive,error:IsError}">
+            測試樣式綁定
+        </div>
+        <button type="button" v-on:click="handle">切換</button>
+
+        <hr>
+
+        <h3>陣列語法</h3>
+        <div v-bind:class="[activeClass,errorClass]">
+            測試樣式綁定
+        </div>
+        <button type="button" v-on:click="handle2">切換</button>
+    </div>
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                IsActive: true,
+                IsError: true,
+                activeClass: "active",
+                errorClass: "error"
+            },
+            methods: {
+                handle: function() {
+                    this.IsActive = !this.IsActive;
+                    this.IsError = !this.IsError;
+                },
+                handle2: function() {
+                    this.activeClass = this.activeClass == "" ? "active" : "";
+                    this.errorClass = this.errorClass == "" ? "error" : "";
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

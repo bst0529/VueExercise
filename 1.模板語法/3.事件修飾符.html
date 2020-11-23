@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div v-on:click="num++">
+            <h3>防止冒泡</h3>
+
+            <div>{{num}}</div>
+
+            <p>v-on:click="handle1"</p>
+            <code>handle1: function(event) {
+                    event.stopPropagation();
+                }</code>
+            <button type="button" v-on:click="handle1">Btn1-1</button>
+
+            <p>v-on:click.stop</p>
+            <button type="button" v-on:click.stop>Btn1-2</button>
+        </div>
+        <hr/>
+        <div>
+            <h3>防止默認行為</h3>
+
+            <p>v-on:click="handel2"</p>
+            <code>handle2: function(event) {
+                event.preventDefault();
+            }</code>
+            <a href="https://google.com.tw" v-on:click="handle2">Achor1-1</a>
+
+
+            <p>v-on:click.prevent</p>
+            <a href="https://google.com.tw" v-on:click.prevent>Achor1-2</a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                num: 0
+            },
+            methods: {
+                handle1: function(event) {
+                    event.stopPropagation();
+                },
+                handle2: function(event) {
+                    event.preventDefault();
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

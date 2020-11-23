@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ol>
+            <li>
+                <input type="text">
+            </li>
+            <li>
+                <p>v-color="color"</p>
+                <input type="text" v-color="color">
+            </li>
+            <li>
+                <p>v-partcolor="partColor"</p>
+                <input type="text" v-partcolor="partColor">
+            </li>
+            <li>
+                <p>v-focus</p>
+                <input type="text" v-focus>
+            </li>
+            <li>
+                <p>v-partfocus</p>
+                <input type="text" v-partfocus>
+            </li>
+        </ol>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        //全域指令==>指定元素綁定焦點(不帶參數)
+        Vue.directive('focus', {
+            inserted: function(el) {
+                el.focus();
+            }
+        });
+        //全域指令==>設定背景顏色(帶參數)
+        Vue.directive("color", {
+            bind: function(el, binding) {
+                el.style.backgroundColor = binding.value;
+            }
+        });
+
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                color: "skyblue",
+                partColor: "yellowgreen"
+            },
+            methods: {
+
+            },
+            //局部指令
+            directives: {
+                partcolor: {
+                    bind: function(el, binding) {
+                        el.style.backgroundColor = binding.value;
+                    }
+                },
+                partfocus: {
+                    inserted: function(el) {
+                        el.focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h3>1.取得keyCode</h3>
+        <div>Key:{{key}}</div>
+        <div>keyCode:{{keyCode}}</div>
+        <input type="text" v-on:keyup="handleKeyCode">
+
+        <h3>2.對象自定義按鍵修飾符別名</h3>
+        <p>Vue.config.keyCodes.AAA = 65</p>
+
+        <h3>3.使用別名</h3>
+        <p id="useA"></p>
+        <input type="text" v-on:keyup.A="handleA" placeholder="按A鍵才會有反應">
+    </div>
+
+    <script src="vue.min.js"></script>
+    <script>
+        Vue.config.keyCodes.A = 65
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                key: "",
+                keyCode: ""
+            },
+            methods: {
+                handleKeyCode: function(event) {
+                    this.key = event.key.toUpperCase();
+                    this.keyCode = event.keyCode;
+                },
+                handleA: function() {
+                    document.getElementById("useA").innerHTML = "使用了別名A";
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id=app>
+        <div>msg：{{msg}}</div>
+        <div>reverseMessage：{{reverseMessage}}</div>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: 'Hellow Vue!'
+            },
+            methods: {
+
+            },
+            //計算屬性 ==> 使模板內容更加簡潔
+            computed: {
+                reverseMessage: function() {
+                    return this.msg.split('').reverse().join('');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form>div>div {
+            float: left;
+        }
+        
+        form>div>div:first-child {
+            width: 100px;
+        }
+        
+        form>div {
+            margin-top: 10px;
+        }
+        
+        form>div::after {
+            content: "";
+            display: block;
+            visibility: hidden;
+            line-height: 0;
+            height: 0;
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <div id=app>
+        <form action="">
+            <div>
+                <div>姓名：</div>
+                <div><input type="text" v-model="name"></div>
+            </div>
+            <div>
+                <div>性別：</div>
+                <div>
+                    <input id="male" type="radio" value="1" name="gender" v-model="gender">
+                    <label for="male">男</label>
+                    <input id="female" type="radio" value="2" name="gender" v-model="gender">
+                    <label for="female">女</label>
+                </div>
+            </div>
+            <div>
+                <div>愛好</div>
+                <div>
+                    <input id="h1" type="checkbox" name="hobby" value="1" v-model="hobby">
+                    <label for="h1">籃球</label>
+                    <input id="h2" type="checkbox" name="hobby" value="2" v-model="hobby">
+                    <label for="h2">籃球</label>
+                    <input id="h3" type="checkbox" name="hobby" value="3" v-model="hobby">
+                    <label for="h3">籃球</label>
+                </div>
+            </div>
+            <div>
+                <div>職業：</div>
+                <div>
+                    <select multiple v-model="occupation">
+                        <option value="">請選擇</option>
+                        <option value="1">電工</option>
+                        <option value="2">廚師</option>
+                        <option value="3">機師</option>
+                        <option value="4">老師</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div>個人簡歷：</div>
+                <div>
+                    <textarea v-model="resume"></textarea>
+                </div>
+            </div>
+            <button @click.prevent="handle">送出</button>
+        </form>
+    </div>
+
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                name: "ABC",
+                gender: "1",
+                hobby: [2, 3],
+                occupation: [1, 2],
+                resume: "CDE"
+            },
+            methods: {
+                handle: function() {
+                    console.log(this.name);
+                    console.log(this.gender);
+                    console.log(this.hobby.toString());
+                    console.log(this.occupation.toString());
+                    console.log(this.resume);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

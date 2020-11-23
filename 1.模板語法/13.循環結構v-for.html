@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h3>v-for遍歷對象</h3>
+        <p>v-for="item in fruits"</p>
+        <ul>
+            <li v-for="item in fruits">{{item}}</li>
+        </ul>
+
+        <p>v-for="(item,index) in fruits"</p>
+        <ul>
+            <li v-for="(item,index) in fruits">{{item}}---{{index}}</li>
+        </ul>
+
+        <h3>key的作用：幫助Vue區分不同元素，提升效能</h3>
+        <p>:key="item.id" v-for="(item,index) in myFruits"</p>
+        <ul>
+            <li :key="item.id" v-for="(item,index) in myFruits">{{item.ename}}---{{item.cname}}---{{index}}</li>
+        </ul>
+
+        <h3>v-for遍歷對象</h3>
+        <p>v-for="(value,key,index) in obj"</p>
+        <ul>
+            <li v-for="(value,key,index) in obj">{{value}}---{{key}}---{{index}}</li>
+        </ul>
+
+        <h3>v-for與v-if的結合使用</h3>
+        <p>v-if="value==10" v-for="(value,key,index) in obj"</p>
+        <ul>
+            <li v-if="value==10" v-for="(value,key,index) in obj">{{value}}---{{key}}---{{index}}</li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                fruits: ["apple", "banana", "orange"],
+                myFruits: [{
+                    id: 1,
+                    ename: "apple",
+                    cname: "頻果"
+                }, {
+                    id: 2,
+                    ename: "banana",
+                    cname: "香蕉"
+                }, {
+                    id: 3,
+                    ename: "orange",
+                    cname: "橘子"
+                }],
+                obj: {
+                    name: "Joho",
+                    sex: "male",
+                    age: 10
+                }
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>

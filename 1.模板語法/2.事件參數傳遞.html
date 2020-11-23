@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <p>v-on:click="handle1"</p>
+            <button type="button" v-on:click="handle1">Btn1</button>
+        </div>
+        <div>
+            <p>v-on:click="handle2(111,222,$event)"</p>
+            <button type="button" v-on:click="handle2(111,222,$event)">Btn2</button>
+        </div>
+    </div>
+
+
+
+
+    <script src="vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                handle1: function(event) {
+                    console.log(event);
+                    console.log(event.target);
+                    console.log(event.target.innerHTML);
+                },
+                handle2: function(p1, p2, event) {
+                    console.log(event);
+                    console.log(p1, p2);
+                    console.log(event.target);
+                    console.log(event.target.innerHTML);
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>

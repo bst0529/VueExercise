@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id=app>
+        <h3>number：轉化為數值</h3>
+        <div>
+            <p>v-model.number="num"</p>
+            <input type="text" v-model.number="num"> + 13={{num+13}}
+        </div>
+
+        <h3>trim：去除開始和結尾的空格</h3>
+        <div>
+            <p>v-model.trim="info"</p>
+            <input type="text" v-model.trim="info"> ==> info.length = {{info.length}}
+        </div>
+
+        <h3>lazy：將input事件欠換為change事件</h3>
+        <p>v-model.lazy="msg"</p>
+        <input type="text" v-model.lazy="msg"> ==> msg = {{msg}}
+    </div>
+
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                num: "",
+                info: "",
+                msg: ""
+            },
+            methods: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

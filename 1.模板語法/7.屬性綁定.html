@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <p>v-bind:href="newUrl"</p>
+        <a v-bind:href="newUrl">{{newName}}</a>
+        <p>:href="newUrl"</p>
+        <a :href="newUrl">{{newName}}</a>
+        <button type="button" v-on:click="handle">切換</button>
+    </div>
+
+    <script src="vue.min.js"></script>
+    <script>
+        var urls = [{
+            "name": "Google",
+            "url": "https://google.com.tw"
+        }, {
+            "name": "Yahoo",
+            "url": "https://tw.yahoo.com"
+        }];
+        var nowIndex = 0;
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                newName: urls[nowIndex].name,
+                newUrl: urls[nowIndex].url
+            },
+            methods: {
+                handle: function() {
+                    nowIndex++;
+                    if (nowIndex >= urls.length) {
+                        nowIndex = 0;
+                    }
+                    this.newName = urls[nowIndex].name;
+                    this.newUrl = urls[nowIndex].url;
+                    console.log(this.newName, this.newUrl);
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>
