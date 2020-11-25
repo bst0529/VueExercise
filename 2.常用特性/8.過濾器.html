@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id=app>
+        <h3>如何定義一個過濾器</h3>
+        <ul>
+            <li>Vue.js允許自訂過濾器，可被用於一些常見的文本格式化。</li>
+            <li>過濾器可以用在兩個地方：雙花括弧插值和v-bind運算式。</li>
+            <li>支援聯級操作</li>
+            <li>過濾器不改變真正的data，而只是改變渲染的結果，並返回過濾後的版本</li>
+            <li>全域註冊時是filter，沒有s的。而局部篩檢程式是filters，是有s的</li>
+        </ul>
+
+        <hr>
+        <input type="text" v-model="msg">
+        <div>msg：{{msg}}</div>
+        <div>msg | upper1：{{msg | upper1}}</div>
+        <div>msg | upper2：{{msg | upper2}}</div>
+        <div>msg | upper1 | lower1：{{msg | upper1 | lower1}}</div>
+        <div>msg | upper2 | lower2：{{msg | upper2 | lower2}}</div>
+        <hr>
+        <p>:abc="msg | upper1" ==> f12看abc屬性</p>
+        <div :abc="msg | upper1"></div>
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+        //全域過濾器
+        Vue.filter("upper1", function(val) {
+            return val.charAt(0).toUpperCase() + val.slice(1);
+        });
+        Vue.filter("lower1", function(val) {
+            return val.charAt(0).toLowerCase() + val.slice(1);
+        });
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: ""
+            },
+            methods: {
+
+            },
+            computed: {
+
+            },
+            watch: {
+
+            },
+            //局部過濾器
+            filters: {
+                upper2: function(val) {
+                    return val.charAt(0).toUpperCase() + val.slice(1);
+                },
+                lower2: function(val) {
+                    return val.charAt(0).toLowerCase() + val.slice(1);
+                }
+
+            }
+        });
+    </script>
+</body>
+
+</html>

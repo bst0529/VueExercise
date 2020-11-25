@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id=app>
+        <p>採用偵聽器來監測用戶名變</p>
+        <p>調用後臺api進行驗證</p>
+        <p>根據驗證的結果調整提示資訊</p>
+        <div>
+            帳號：<input type=text v-model.lazy="uname"><span v-text="tip"></span>
+        </div>
+    </div>
+
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                uname: "",
+                unames: ["admin", "john", "tom"],
+                tip: ""
+            },
+            methods: {
+                checkUname: function(uname) {
+                    var o = this;
+                    setTimeout(() => {
+                        if (o.unames.some(function(val) {
+                                return val.toLowerCase() == o.uname.toLowerCase()
+                            })) {
+                            o.tip = "帳號已存在";
+                        } else {
+                            o.tip = "帳號可以使用";
+                        }
+                    }, 2000);
+                }
+            },
+            computed: {
+
+            },
+            watch: {
+                uname: function(val) {
+                    this.checkUname(val);
+                    this.tip = "檢查中......";
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

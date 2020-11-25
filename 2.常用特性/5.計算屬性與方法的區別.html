@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id=app>
+        <div>msg：{{msg}}</div>
+
+        <h3>計算屬性和方法有什麼區別</h3>
+        <ul>
+            <li>計算屬性會緩存</li>
+            <li>方法不會緩存</li>
+        </ul>
+
+        <p>當多次調用 reverseString 的時候 只要裡面的 msg 值不改變 他會把第一次計算的結果直接返回 直到data 中的num值改變 計算屬性才會重新發生計算</p>
+
+        <div>reverseMessage：{{reverseMessage()}}</div>
+        <div>reverseMessage：{{reverseMessage()}}</div>
+        <div>reverseString{{reverseString}}</div>
+        <div>reverseString{{reverseString}}</div>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: 'Hellow Vue!'
+            },
+            methods: {
+                reverseMessage: function() {
+                    console.log("methods");
+                    return this.msg.split('').reverse().join('');
+                }
+            },
+            computed: {
+                reverseString: function() {
+                    console.log("computed");
+                    return this.msg.split('').reverse().join('');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
