@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .grid {
+            margin: auto;
+            width: 500px;
+            text-align: center;
+        }
+        
+        .grid table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .grid th,
+        .grid td {
+            padding: 10px;
+            border: 1px dashed orange;
+            height: 35px;
+            line-height: 35px;
+        }
+        
+        .grid th {
+            background-color: orange;
+        }
+        
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: orange;
+        }
+        
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: pink;
+            color: #000;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>過濾器(格式化日期)
+            <ul>
+                <li>filter 定義一個全域篩檢程式</li>
+            </ul>
+        </li>
+        <li>
+            自定義指令(獲取表單焦點)
+            <ul>
+                <li>讓表單自動獲取焦點</li>
+                <li>通過Vue.directive 自訂指定</li>
+            </ul>
+        </li>
+        <li>
+            計算屬性(統計圖書數量)
+            <ul>
+                <li>
+                    通過計算屬性計算圖書的總數
+                    <ul>
+                        <li>圖書的總數就是計算陣列的長度 </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            監聽器(驗證圖書存在性)
+            <ul>
+                <li>watch 中的屬性 一定是data 中 已經存在的資料</li>
+                <li>一般用於非同步或者開銷較大的操作</li>
+            </ul>
+            <li>生命週期</li>
+    </ul>
+    <div id="app">
+        <div class="grid">
+            <div>
+                <h1>添加圖書</h1>
+                <div class="book">
+                    <div>
+                        <label for="id">編號：</label>
+                        <input type="text" id="id" v-model="id" :disabled="flag" v-focus>
+                        <label for="name">名稱：</label>
+                        <input type="text" id="name" v-model="name">
+                        <button type="button" @click="handle" :disabled="submitFlag">送出</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <span>圖書總數：</span>
+                <span>{{total}}</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>編號</th>
+                        <th>名稱</th>
+                        <th>時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr :key="item.id" v-for="item in books">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date | myDateFormat("yyyy/MM/dd hh:mm:ss")}}</td>
+                        <td>
+                            <a href="#" @click.prevent="toEdit(item.id)">修改</a>
+                            <span>|</span>
+                            <a href="#" @click.prevent="toDelete(item.id)">刪除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        Vue.filter("myDateFormat", function(val, arg1) {
+            function dateFormat(date, format) {
+                if (typeof date === "string") {
+                    var mts = date.match(/(\/Date\((\d+)\)\/)/);
+                    if (mts && mts.length >= 3) {
+                        date = parseInt(mts[2]);
+                    }
+                }
+                date = new Date(date);
+                if (!date || date.toUTCString() == "Invalid Date") {
+                    return "";
+                }
+                var map = {
+                    "M": date.getMonth() + 1, //月份 
+                    "d": date.getDate(), //日 
+                    "h": date.getHours(), //小时 
+                    "m": date.getMinutes(), //分 
+                    "s": date.getSeconds(), //秒 
+                    "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+                    "S": date.getMilliseconds() //毫秒 
+                };
+
+                format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+                    var v = map[t];
+                    if (v !== undefined) {
+                        if (all.length > 1) {
+                            v = '0' + v;
+                            v = v.substr(v.length - 2);
+                        }
+                        return v;
+                    } else if (t === 'y') {
+                        return (date.getFullYear() + '').substr(4 - all.length);
+                    }
+                    return all;
+                });
+                return format;
+            }
+            return dateFormat(val, arg1);
+        });
+
+        Vue.directive('focus', {
+            inserted: function(el) {
+                el.focus();
+            }
+        });
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                id: "",
+                name: "",
+                flag: false,
+                submitFlag: false,
+                books: []
+            },
+            methods: {
+                handle: function() {
+                    if (this.flag) {
+                        this.books.some((item) => {
+                            if (item.id == this.id) {
+                                item.name = this.name;
+                                this.flag = false;
+                                return true;
+                            }
+                        });
+                    } else {
+                        var book = {
+                            id: this.id,
+                            name: this.name,
+                            date: "",
+                        };
+                        this.books.push(book);
+                        this.id = "";
+                        this.name = "";
+                    }
+                    this.id = "";
+                    this.name = "";
+                },
+                toEdit: function(id) {
+                    this.flag = true;
+                    var book = this.books.filter(function(item) {
+                        return item.id == id;
+                    });
+                    this.id = book[0].id;
+                    this.name = book[0].name;
+                },
+                toDelete: function(id) {
+                    //方法1
+                    /*
+                    var index = this.books.findIndex(function(item) {
+                        return item.id == id;
+                    });
+                    this.books.splice(index, 1);
+                    */
+                    //方法2
+                    this.books = this.books.filter((item) => {
+                        return item.id != id;
+                    });
+                }
+            },
+            computed: {
+                total: function() {
+                    return this.books.length;
+                }
+            },
+            watch: {
+                name: function(val) {
+                    this.submitFlag = this.books.some(function(item) {
+                        return item.name == val;
+                    });
+                }
+            },
+            mounted: function() {
+                var d = [{
+                    id: 1,
+                    name: '三國演義',
+                    date: 2525609975000
+                }, {
+                    id: 2,
+                    name: '水滸傳',
+                    date: 2525609975000
+                }, {
+                    id: 3,
+                    name: '紅樓夢',
+                    date: 2525609975000
+                }, {
+                    id: 4,
+                    name: '西遊記',
+                    date: 2525609975000
+                }];
+                this.books = d;
+            },
+            filters: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin-bottom: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li>
+                <h3>變異方法(修改原有數據)</h3>
+                <ul>
+                    <li>push()</li>
+                    <li>pop()</li>
+                    <li>shift()</li>
+                    <li>unshift()</li>
+                    <li>splice()</li>
+                    <li>sort()</li>
+                    <li>reverse()</li>
+                </ul>
+            </li>
+            <li>
+                <h3>替換陣列(生成新的陣列)</h3>
+                <ul>
+                    <li>filter()</li>
+                    <li>concat()</li>
+                    <li>slice()</li>
+                </ul>
+            </li>
+            <li>
+                <h3>修改響應式數據</h3>
+                <ul>
+                    <li>Vue.set(vm.items,indexOfitem,newValue)</li>
+                    <li>
+                        vm.$set(vm.items,indexOfitem,newValue)
+                        <p>1.參數1表示要處理的陣列名稱</p>
+                        <p>2.參數2表示要處裡的陣列的索引</p>
+                        <p>3.參數3表示要處裡的陣列的值</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div>原始數據：{{list.join(',')}}</div>
+        <div>新數據：{{listNew.join(',')}}</div>
+        <h4>變異方法</h4>
+        <div>
+            <button type="button" @click="push">push()</button>
+            <button type="button" @click="pop">pop()</button>
+            <button type="button" @click="shift">shift()</button>
+            <button type="button" @click="unshift">unshift()</button>
+            <button type="button" @click="splice1">splice(2)</button>
+            <button type="button" @click="splice2">splice(2,5)</button>
+            <button type="button" @click="splice3">splice(2,5,this.list.length+1)</button>
+            <button type="button" @click="reverse">reverse()</button>
+        </div>
+        <h4>變異方法</h4>
+        <div>
+            <button type="button" @click="filter">filter() => index>=3</button>
+            <button type="button" @click="concat()">concat() => [this.list.length + 1, this.list.length + 2, this.list.length + 3]</button>
+            <button type="button" @click="slice1">slice(2)</button>
+            <button type="button" @click="slice2">slice(2,8)</button>
+        </div>
+
+        <h3>修改響應式數據</h3>
+        <div>原始數據：{{list2.join(',')}}</div>
+        <br>
+        <div>vm.list2[2] = "ccc"; ==> 無反應 ==> 同批次有Vue.set或vm.$set且參數1的陣列名稱相同 ==> 立即反應</div>
+        <div>console ==> vm.list2[2] = "ddd" ==> 無反應 </div>
+        <br>
+        <div>Vue.set(vm.list2, 3, 'xxx'); ==> 立即反應</div>
+        <div>console ==> Vue.set(vm.list, 3, 'xxx'); ==> 立即反應</div>
+        <br>
+        <div>vm.$set(vm.list2, 4, 'yyy'); ==> 立即反應</div>
+        <div>console ==> vm.$set(vm.list2, 4, 'yyy'); ==> 立即反應</div>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'],
+                list2: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'],
+                listNew: []
+            },
+            methods: {
+                push: function() {
+                    this.list.push(this.list.length + 1);
+                },
+                pop: function() {
+                    this.list.pop();
+                },
+                shift: function() {
+                    this.list.shift();
+                },
+                unshift: function() {
+                    this.list.unshift(this.list.length + 1);
+                },
+                splice1: function() {
+                    this.listnew = this.list.splice(2);
+                },
+                splice2: function() {
+                    this.listnew = this.list.splice(2, 5);
+                },
+                splice3: function() {
+                    this.listnew = this.list.splice(2, 5, this.list.length + 1);
+                },
+                reverse: function() {
+                    this.list.reverse();
+                },
+                filter: function() {
+                    this.listNew = this.list.filter((value, index, arr) => {
+                        return index >= 3;
+                    });
+                },
+                concat: function() {
+                    this.listNew = this.list.concat(this.list.length + 1, this.list.length + 2, this.list.length + 3);
+                },
+                slice1: function() {
+                    this.listNew = this.list.slice(2);
+                },
+                slice2: function() {
+                    this.listNew = this.list.slice(2, 8);
+                }
+            },
+            computed: {
+
+            },
+            watch: {
+
+            },
+            filters: {
+
+            }
+        });
+        vm.list2[2] = "ccc"
+        Vue.set(vm.list2, 3, 'xxx');
+        vm.$set(vm.list2, 4, 'yyy');
+    </script>
+</body>
+
+</html>
