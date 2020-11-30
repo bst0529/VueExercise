@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        img {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <p>第1步 ==> 設定三個變數</p>
+    <img src="img/13.png" alt="">
+    <p>第2步 ==> 在vm內使用components參數，將三個組件對應到之前三個變數</p>
+    <img src="img/14.png" alt="">
+    <p>第3步 ==> 使用</p>
+    <img src="img/15.png" alt="">
+    <p>結果</p>
+    <img src="img/16.png" alt="">
+    <h3>注意 ==> <span class="red">局部組件沒有效果</span></h3>
+    <img src="img/17.png" alt="">
+    <h3>結論</h3>
+    <div class="hight-light">局部組件只能在註冊他的父組件中使用</div>
+    <br><br><br>
+
+    <hr>
+    <div id="app">
+        <hellow-world></hellow-world>
+        <hellow-john></hellow-john>
+        <hellow-tom></hellow-tom>
+        <test-com></test-com>
+    </div>
+
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        Vue.component('test-com', {
+            template: `<div>
+                          Test
+                          <hellow-world></hellow-world>
+                       </div>`
+        });
+        var HellowWorld = {
+            data: function() {
+                return {
+                    msg: 'HellowWorld'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        }
+        var HellowJohn = {
+            data: function() {
+                return {
+                    msg: 'HellowJohn'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        }
+        var HellowTom = {
+            data: function() {
+                return {
+                    msg: 'HellowTom'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        }
+        var vm = new Vue({
+            el: "#app",
+            components: {
+                'hellow-world': HellowWorld,
+                'hellow-john': HellowJohn,
+                'hellow-tom': HellowTom,
+            }
+        });
+    </script>
+</body>
+
+</html>

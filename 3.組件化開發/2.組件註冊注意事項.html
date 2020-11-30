@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            display: block;
+        }
+        
+        .red {
+            border: 1px solid #000;
+            background-color: red;
+            color: #fff;
+            padding: 5px;
+        }
+        
+        .green {
+            border: 1px solid #000;
+            background-color: green;
+            color: #fff;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>組件注意事項 </h3>
+    <ul>
+        <li>組件參數的data值必須是函數同時這個函數要求返回一個物件</li>
+        <li>
+            元件範本必須是單個根項目
+            <ul>
+                <li>
+                    <h4>div1與div2為兄弟元素會抱錯</h4>
+                    <img src="img/2.png">
+                </li>
+                <li>
+                    <h4>div1為根源素所以OK</h4>
+                    <img src="img/3.png">
+                </li>
+            </ul>
+        </li>
+        <li>
+            元件範本的內容可以是範本字串(由範本符號包起來，可換行)，範本符號為：<span class="im">`</span><br>
+            <img src="img/1.png">
+        </li>
+        <li>
+            組件命名方式
+            <ul>
+                <li>
+                    <h4>短橫線方式</h4>
+                    <img src="img/7.png" alt="">
+                    <h4>使用</h4>
+                    <ul>
+                        <li>直接使用button-count為標籤</li>
+                        <li>崁入別的組件樣板中</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>駝峰方式</h4>
+                    <img src="img/8.png" alt="">
+                    <h4>使用</h4>
+                    <ul>
+                        <li>
+                            <p>直接使用HellowWorld為標籤 ==> <span class="red">無效果</span></p>
+                            <img src="img/10.png" alt="">
+                        </li>
+                        <li>
+                            <p>全小寫並以-符號隔開 ==> <span class="green">正常顯示</span></p>
+                            <img src="img/11.png" alt="">
+                        </li>
+                        <li>
+                            <p>崁入別的組件樣板中 ==> <span class="green">正常顯示</span></p>
+                            <img src="img/12.png" alt="">
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div id="app">
+        <button-count></button-count>
+        <hellow-world></hellow-world>
+        <HellowWorld></HellowWorld>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        Vue.component('button-count', {
+            data: function() {
+                return {
+                    count: 0
+                }
+            },
+            template: `<div>
+                        <button type="button" @click="handle">點擊了{{count}}次</button>
+                        <HellowWorld></HellowWorld>
+                       </div>
+                      `,
+            methods: {
+                handle: function() {
+                    this.count++;
+                }
+            }
+        });
+
+        Vue.component('HellowWorld', {
+            data: function() {
+                return {
+                    msg: 'HellowWorld'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                count: 0
+            }
+        });
+    </script>
+</body>
+
+</html>

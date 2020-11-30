@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>全域註冊組件</h3>
+    <p>範本</p>
+    <img src="img/0.png" alt="">
+
+    <div id='app'>
+        <p>註冊</p>
+        <img src="img/4.png" alt="">
+        <!-- 2.使用 -->
+        <p>單次使用</p>
+        <button-count></button-count>
+        <img src="img/5.png" alt="">
+        <hr>
+        <p>多次使用，分別獨立</p>
+        <button-count></button-count>
+        <button-count></button-count>
+        <button-count></button-count>
+        <img src="img/6.png" alt="">
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        //1.註冊
+        Vue.component('button-count', {
+            data: function() {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button type="button" @click="handle">點擊了{{count}}次</button>',
+            methods: {
+                handle: function() {
+                    this.count++;
+                }
+            }
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                count: 10
+            }
+        });
+    </script>
+</body>
+
+</html>
