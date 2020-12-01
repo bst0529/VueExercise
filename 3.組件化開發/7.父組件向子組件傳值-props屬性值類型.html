@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.min.js"></script>
+    <style>
+        img {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <h3>props屬性值類型</h3>
+        <ul>
+            <li>字符串String</li>
+            <li>數值Number</li>
+            <li>布爾值Boolean</li>
+            <li>陣列Array</li>
+            <li>對象Object</li>
+        </ul>
+        <hr>
+        <img src="img/22.png" alt="">
+        <ul>
+            <li>
+                pstr：<span>{{pstr}}</span>
+            </li>
+            <li>
+                pnum：<span>{{pnum}}</span>
+            </li>
+            <li>
+                pboo：<span>{{pboo}}</span>
+            </li>
+            <li>
+                parr：
+                <ul>
+                    <li :k='index' v-for='(item,index) in parr'>{{item}}</li>
+                </ul>
+            </li>
+            <li>
+                pobj：
+                <ul>
+                    <li>{{pobj.name}}</li>
+                    <li>{{pobj.age}}</li>
+                </ul>
+            </li>
+        </ul>
+        <hr>
+        <img src="img/23.png" alt="">
+        <img src="img/24.png" alt="">
+        <div>pmsg：{{pmsg}}</div>
+        <menu-itme :pstr='pstr' :pnum='pnum' :pboo='pboo' :parr='parr' :pobj='pobj'></menu-itme>
+        <div>====================================================================================</div>
+        <img src="img/25.png" alt="">
+        <img src="img/26.png" alt="">
+        <div>pmsg：{{pmsg}}</div>
+        <menu-itme2 pstr='pstr' pnum='pnum' pboo='pboo' parr='parr' pobj='pobj'></menu-itme2>
+    </div>
+    <script>
+        Vue.component('menu-itme', {
+            props: ['pstr', 'pnum', 'pboo', 'parr', 'pobj'],
+            template: `
+            <div>
+                <div>pstr：{{pstr}} ==> 類型：{{typeof pstr}}</div>
+                <div>pnum：{{pnum}} ==> 類型：{{typeof pnum}}</div>
+                <div>pboo：{{pboo}} ==> 類型：{{typeof pboo}}</div>
+                <div>parr： ==> 類型：{{typeof parr}}</div>
+                <ul>
+                    <li :k='index' v-for='(item,index) in parr'>{{item}}</li>
+                </ul>
+                <div>pobj： ==> 類型：{{typeof pobj}}</div>
+                <div>name：{{pobj.name}}</div>
+                <div>age：{{pobj.age}}</div>
+            </div>
+            `
+        });
+        Vue.component('menu-itme2', {
+            props: ['pstr', 'pnum', 'pboo', 'parr', 'pobj'],
+            template: `
+            <div>
+                <div>pstr：{{pstr}} ==> 類型：{{typeof pstr}}</div>
+                <div>pnum：{{pnum}} ==> 類型：{{typeof pnum}}</div>
+                <div>pboo：{{pboo}} ==> 類型：{{typeof pboo}}</div>
+                <div>parr： ==> 類型：{{typeof parr}}</div>
+                <ul>
+                    <li :k='index' v-for='(item,index) in parr'>{{item}}</li>
+                </ul>
+                <div>pobj： ==> 類型：{{typeof pobj}}</div>
+                <div>name：{{pobj.name}}</div>
+                <div>age：{{pobj.age}}</div>
+            </div>
+            `
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父組件的內容',
+                pstr: '好好學習，天天向上',
+                pnum: 12,
+                pboo: false,
+                parr: ['apple', 'lemon', 'banana'],
+                pobj: {
+                    name: 'lisa',
+                    age: 10
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

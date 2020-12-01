@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+
+<body>
+    <div id='app'>
+        <ul>
+            <li class="mb-3">組件內部通過<span class="hight-light">props</span>屬性接收傳遞過來的值</li>
+            <li>父組件通過<span class="red">屬性</span>值將值傳遞給子組件</li>
+        </ul>
+        <img src="img/20.png" alt="">
+        <hr>
+        <div>msg：{{msg}}</div>
+        <div>pmsg：{{pmsg}}</div>
+        <div>
+            cmsg：
+            <menu-item title='來自父組件的值'></menu-item>
+            <menu-item :content='pmsg'></menu-item>
+        </div>
+
+
+    </div>
+    <script src="../js/vue.min.js"></script>
+    <script>
+        Vue.component('menu-item', {
+            props: ['title', 'content'],
+            data: function() {
+                return {
+                    cmsg: '子組件的內容'
+                }
+            },
+            template: '<span>{{cmsg}}---{{title}}---{{content}}</span>'
+        });
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: '父組件的內容',
+                pmsg: '動態綁定屬性'
+            }
+        });
+    </script>
+</body>
+
+</html>

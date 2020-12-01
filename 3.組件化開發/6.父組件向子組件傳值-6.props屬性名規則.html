@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+
+<body>
+    <div id='app'>
+        <ul>
+            <li>在props中使用駝峰形式，模板中需要使用短橫線的形式</li>
+            <li>字符串的模板中沒有這樣的限制</li>
+        </ul>
+        <img src="img/21.png" alt="">
+        <hr>
+        <menu-item :title='pmsg'></menu-item>
+        <menu-content content='我是誰'></menu-content>
+        <say-hellow manu-title="向前衝衝衝"></say-hellow>
+        <say-hellow manuTitle="向前飛飛飛"></say-hellow>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        Vue.component('sayHellow', {
+            props: ['manuTitle'],
+            template: '<div>{{manuTitle}}</div>'
+        });
+        Vue.component('menu-content', {
+            props: ['content'],
+            template: '<span>{{content}}<say-hellow manu-title="向後噴噴噴"></say-hellow></span>'
+        });
+        Vue.component('menu-item', {
+            props: ['title'],
+            template: '<span>{{title}}<say-hellow manuTitle="向下拉拉拉"></say-hellow></span>'
+        });
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                pmsg: '動態綁定屬性',
+            }
+        });
+    </script>
+</body>
+
+</html>
