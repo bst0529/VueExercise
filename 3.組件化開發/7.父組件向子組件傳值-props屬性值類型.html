@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../js/vue.min.js"></script>
+    <link rel="stylesheet" href="../css/common.css">
     <style>
         img {
             display: block;
@@ -60,6 +60,8 @@
         <div>pmsg：{{pmsg}}</div>
         <menu-itme2 pstr='pstr' pnum='pnum' pboo='pboo' parr='parr' pobj='pobj'></menu-itme2>
     </div>
+
+    <script src="../js/vue.min.js"></script>
     <script>
         Vue.component('menu-itme', {
             props: ['pstr', 'pnum', 'pboo', 'parr', 'pobj'],

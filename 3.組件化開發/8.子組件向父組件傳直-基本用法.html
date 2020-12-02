@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+
+</head>
+
+<body>
+    <h3>子組件如何向父組件傳遞數據</h3>
+    <ol>
+        <li>子組件用$emit()觸發事件</li>
+        <li>$emit() 第一個參數為 自訂的事件名稱 第二個參數為需要傳遞的資料</li>
+        <li>父元件用v-on 監聽子組件的事件</li>
+    </ol>
+    <h3 class="hight-light">props傳遞資料原則：單向資料流程</h3>
+    <img src="img/27.png" alt="">
+
+    <hr>
+
+    <div id='app'>
+        <div :style='{fontSize:fontSize+"px"}'>pmsg：{{pmsg}}</div>
+        <menu-item :fruits='fruits' @enlarge-text='handle'></menu-item>
+    </div>
+
+    <script src="../js/vue.min.js"></script>
+    <script>
+        Vue.component('menu-item', {
+            props: ['fruits'],
+            template: `<div>
+                        <ul>
+                            <li :k='index' v-for='(item,index) in fruits'>{{item}}</li>
+                        </ul>
+                        <button @click='$emit("enlarge-text")'>擴大父元件中字體大小</button>
+                       </div>
+                     `
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父組件的內容',
+                fruits: ['applte', 'lemon', 'banana'],
+                fontSize: 10
+            },
+            methods: {
+                handle: function() {
+                    this.fontSize += 5;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
