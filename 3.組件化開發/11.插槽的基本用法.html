@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+    <h3>組件插槽</h3>
+    <ul>
+        <li>組件的最大特性就是複用性，而用好插槽能大大提高組件的可複用能力</li>
+        <li>當元件渲染的時候，這個 ;&lt;slot&gt; 元素將會被替換為“元件標籤中嵌套的內容”</li>
+        <li>插槽內可以包含任何範本代碼，包括 HTML</li>
+    </ul>
+    <img src="img/34.png" alt="">
+    <hr>
+    <div id='app'>
+        <div>pmsg：{{pmsg}}</div>
+        <alert-box>發生錯誤，請與管理人員聯絡</alert-box>
+        <alert-box></alert-box>
+    </div>
+    <script>
+        Vue.component('alert-box', {
+            template: `<div>
+                <strong>ERROR：</strong>
+                <slot>默認內容</slot>
+            </div>`,
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父組件的內容'
+            }
+        });
+    </script>
+</body>
+
+</html>

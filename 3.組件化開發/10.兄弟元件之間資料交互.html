@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+    <h3>兄弟之間的傳遞</h3>
+    <ul>
+        <li>
+            兄弟之間傳遞資料需要借助於事件中心，通過事件中心傳遞資料
+            <ul>
+                <li>提供事件中心 var hub = new Vue()</li>
+            </ul>
+        </li>
+        <li>傳遞資料方，通過一個事件觸發hub.$emit(方法名，傳遞的資料)</li>
+        <li>接收資料方，通過mounted(){}鉤子中 觸發hub.$on()方法名</li>
+        <li>銷毀事件 通過hub.$off()方法名銷毀之後無法進行傳遞資料</li>
+    </ul>
+
+    <h4>1.單獨的事件中心管理組件間的通信</h4>
+    <ul>
+        <li>var eventHub=new Vue()</li>
+    </ul>
+
+    <h4>2.監聽事件與銷毀事件</h4>
+    <ul>
+        <li>eventHub.$on('事件名稱',function)</li>
+        <li>eventHub.$off('事件名稱')</li>
+    </ul>
+    <h4>3.觸發事件</h4>
+    <ul>
+        <li>eventHub.$emit('事件名稱',參數)</li>
+    </ul>
+    <img src="img/29.png" alt="" class="mb-2">
+    <span class="hight-light">事件中心</span>
+    <img src="img/30.png" alt="" class="mb-2">
+    <div>
+        <div class="fl">
+            <span class="hight-light">組件A</span>
+            <img src="img/31.png" alt="">
+        </div>
+        <div class="fl ml-2">
+            <span class="hight-light">組件B</span>
+            <img src="img/32.png" alt="">
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <span class="hight-light mt-2">銷毀事件</span>
+    <img src="img/33.png" alt="">
+    <hr>
+    <div id='app'>
+        <div>pmsg：{{pmsg}}</div>
+        <button @click='handle'>銷毀事件</button>
+        <lisa-item></lisa-item>
+        <robert-item></robert-item>
+    </div>
+    <script>
+        var hub = new Vue();
+        Vue.component('lisa-item', {
+            data: function() {
+                return {
+                    num: 0
+                }
+            },
+            template: `
+                <div>
+                    <div>Lisa：{{num}}</div>
+                    <div>
+                        <button @click='handle'>點擊</button>
+                    </div>
+                </div>
+            `,
+            methods: {
+                handle: function() {
+                    hub.$emit('Robert-Event', 1);
+                }
+            },
+            mounted: function() {
+                hub.$on('Lisa-Event', (val) => {
+                    this.num += val;
+                })
+            }
+        });
+        Vue.component('robert-item', {
+            data: function() {
+                return {
+                    num: 0
+                }
+            },
+            template: `
+                <div>
+                    <div>Robert：{{num}}</div>
+                    <div>
+                        <button @click='handle'>點擊</button>
+                    </div>
+                </div>
+            `,
+            methods: {
+                handle: function() {
+                    hub.$emit('Lisa-Event', 2);
+                }
+            },
+            mounted: function() {
+                hub.$on('Robert-Event', (val) => {
+                    this.num += val;
+                })
+            }
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父組件的內容'
+            },
+            methods: {
+                handle: function() {
+                    hub.$off('Robert-Event');
+                    hub.$off('Lisa-Event');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

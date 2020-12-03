@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/vue.min.js"></script>
+    <style>
+        .current {
+            color: yellowgreen;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>作用域插槽</h3>
+    <ul>
+        <li>父元件對子元件加工處理</li>
+        <li>既可以複用子元件的slot，又可以使slot內容不一致</li>
+    </ul>
+    <img src="img/36-1.png" alt="" class="mb-2">
+    <img src="img/36-2.png" alt="" class="mb-2">
+    <img src="img/36-3.png" alt="" class="mb-2">
+
+    <hr>
+    <div id='app'>
+        <div>pmsg：{{pmsg}}</div>
+        <!-- 1、當我們希望li 的樣式由外部使用元件的地方定義，
+                因為可能有多種地方要使用該元件，但樣式希望不一樣，
+                這個時候我們需要使用作用域插槽 
+        -->
+        <fruit-list :fruits='fruits'>
+            <!-- 2、 父元件中使用了<template>元素,而且包含scope="slotProps",
+                     slotProps在這裡只是臨時變數 
+            -->
+            <template slot-scope='slotProps'>
+                <strong v-if='slotProps.fruit.id==2' class="current">{{slotProps.fruit.name}}</strong>
+                <span v-else>{{slotProps.fruit.name}}</span>
+            </template>
+        </fruit-list>
+    </div>
+    <script>
+        Vue.component('fruit-list', {
+            props: ['fruits'],
+            template: `
+            <div>
+                <ul>
+                    <li :key='item.id' v-for='item in fruits'>
+                        <slot :fruit='item'>{{item.name}}</slot>
+                    </li>
+                </ul>
+            </div>
+            `
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父組件的內容',
+                fruits: [{
+                    id: 1,
+                    name: 'apple'
+                }, {
+                    id: 2,
+                    name: 'lemo'
+                }, {
+                    id: 3,
+                    name: 'banana'
+                }]
+            }
+        });
+    </script>
+</body>
+
+</html>

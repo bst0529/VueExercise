@@ -5,18 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
     <script src="../js/vue.min.js"></script>
 </head>
 
 <body>
     <div id='app'>
-
+        <div>pmsg：{{pmsg}}</div>
     </div>
     <script>
+        Vue.component('', {
+            props: [],
+            data: function() {
+                return {
+
+                }
+            },
+            template: `
+            <div>
+            
+            </div>
+            `,
+            methods: {
+
+            },
+            mounted: function() {
+
+            }
+        });
+
         var vm = new Vue({
             el: '#app',
-            data: function() {
-
+            data: {
+                pmsg: '父組件的內容'
             }
         });
     </script>

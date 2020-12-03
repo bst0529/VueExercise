@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+    <h3>具名插槽</h3>
+    <ul>
+        <li>具有名字的插槽</li>
+        <li>使用&lt;slot&gt;</pre>中的 "name" 屬性綁定元素</li>
+        <li>具名插槽的渲染順序，完全取決於範本，而不是取決於父元件中元素的順序</li>
+    </ul>
+
+    <span class="hight-light">模板</span>
+    <img src="img/35-1.png" alt="">
+    <span class="hight-light mt-3">用法1</span> ==> <span class="red">1對1</span>
+    <img src="img/35-2.png" alt="">
+    <span class="hight-light mt-3">用法2</span> ==> <span class="red">可1對多</span>
+    <img src="img/35-3.png" alt="">
+
+    <hr>
+    <div id='app'>
+        <div>pmsg：{{pmsg}}</div>
+        <base-layout>
+            <p slot='header'>標頭信息</p>
+            <p>主要信息1</p>
+            <p>主要信息2</p>
+            <p slot="footer">底部信息</p>
+        </base-layout>
+
+        <hr>
+        <base-layout>
+            <template slot='header'>
+            <p>標頭信息1</p>
+            <p>標頭信息2</p>
+        </template>
+            <template>
+            <p>主要信息1</p>
+            <p>主要信息2</p>
+        </template>
+            <template slot='footer'>
+            <p>底部信息1</p>
+            <p>底部信息2</p>
+        </template>
+        </base-layout>
+    </div>
+    <script>
+        Vue.component('base-layout', {
+            props: [],
+            template: `
+            <div>
+                <header>
+                    <slot name='header'></slot>
+                </header>
+                <main>
+                    <slot></slot>
+                    <slot></slot>
+                </main>
+                <footer>
+                    <slot name='footer'></slot>
+                </footer>
+            </div>            
+            `,
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父組件的內容'
+            }
+        });
+    </script>
+</body>
+
+</html>

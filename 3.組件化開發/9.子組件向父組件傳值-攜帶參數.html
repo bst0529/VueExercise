@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+    <ul>
+        <li>子組件用$emit()觸發事件</li>
+        <li>第一個參數為自訂的事件名稱</li>
+        <li>第二個參數為需要傳遞的資料</li>
+    </ul>
+    <img src="img/28.png" alt="">
+
+    <hr>
+    <div id='app'>
+        <div :style='{fontSize:fontSize+"px"}'>pmsg：{{pmsg}}</div>
+        <menu-item :fruits='fruits' @enlarge-size='handle($event)'></menu-item>
+    </div>
+    <script>
+        Vue.component('menu-item', {
+            props: ['fruits'],
+            template: `<div>
+                <ul>
+                    <li :k='index' v-for='(item,index) in fruits'>{{item}}</li>
+                </ul>
+                <button @click="$emit('enlarge-size')">使字體變大(+5)</button>
+                <button @click="$emit('enlarge-size',10)">使字體變大(+10)</button>
+             </div>
+            `
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                pmsg: '父組件的內容',
+                fruits: ['apple', 'lemon', 'banana'],
+                fontSize: 10
+            },
+            methods: {
+                handle: function(val) {
+                    if (val) {
+                        this.fontSize += val;
+                    } else {
+                        this.fontSize += 5;
+                    }
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
