@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="css/myCart.css">
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id='app'>
+        <my-cart></my-cart>
+    </div>
+
+    <hr>
+    <img src="img/42-1.png" alt="" class="mb-2">
+    <img src="img/42-2.png" alt="" class="mb-2">
+    <img src="img/42-3.png" alt="" class="mb-2">
+
+    <script>
+        var CarHeader = {
+            props: ['uname'],
+            template: `
+            <div class="my-cart-header">
+                <h3>{{uname}}的購物車</h3>
+            </div>
+            `
+        }
+        var CarBody = {
+            props: ['list'],
+            template: `
+            <div class="my-cart-body">
+                <div class="item" :key='item.id' v-for='item in list'>
+                    <div>
+                        <div :style='{backgroundPosition:item.imgPosition}'></div>
+                        <div>{{item.product}}：單價{{item.price+item.unit}}</div>
+                    </div>
+                    <div>
+                        <a href="#">-</a>
+                        <input type="number" :value='item.amount' style="width: 40px;height: 20px;text-align: center;">
+                        <a href="#">+</a>
+                    </div>
+                    <div>
+                        <a href="#" @click='del(item.id)'>&times;</a>
+                    </div>
+                </div>
+            </div>
+            `,
+            methods: {
+                del: function(id) {
+                    this.$emit('cart-del', id)
+                }
+            }
+        }
+        var CarFooter = {
+            props: ['list'],
+            template: `
+            <div class="my-cart-footer">
+                <span>總價：{{total}}萬</span>
+                <button>結算</button>
+            </div>
+            `,
+            computed: {
+                total: function() {
+                    var t = 0;
+                    this.list.forEach(item => {
+                        t += item.price * item.amount;
+                    });
+                    return t;
+                }
+            }
+        }
+        Vue.component('my-cart', {
+            data: function() {
+                return {
+                    uname: '劉德華',
+                    list: [{
+                        id: 1,
+                        product: '車款1',
+                        price: '150',
+                        unit: '萬',
+                        amount: 2,
+                        imgPosition: '1px 1px'
+                    }, {
+                        id: 2,
+                        product: '車款2',
+                        price: '200',
+                        unit: '萬',
+                        amount: 1,
+                        imgPosition: '-68px 1px'
+                    }, {
+                        id: 3,
+                        product: '車款3',
+                        price: '300',
+                        unit: '萬',
+                        amount: 3,
+                        imgPosition: '-132px 1px'
+                    }, {
+                        id: 4,
+                        product: '車款4',
+                        price: '400',
+                        unit: '萬',
+                        amount: 2,
+                        imgPosition: '-199px 1px'
+                    }, {
+                        id: 5,
+                        product: '車款5',
+                        price: '500',
+                        unit: '萬',
+                        amount: 5,
+                        imgPosition: '-66px -124px'
+                    }]
+                }
+            },
+            template: `
+            <div class='my-cart'>
+                <car-header :uname='uname'></car-header>
+                <car-body :list='list' @cart-del='delCart($event)'></car-body>
+                <car-footer :list='list'></car-footer>
+            </div>
+            `,
+            components: {
+                'car-header': CarHeader,
+                'car-body': CarBody,
+                'car-footer': CarFooter
+            },
+            methods: {
+                delCart: function(id) {
+                    var index = this.list.findIndex(item => {
+                        return item.id == id;
+                    });
+                    this.list.splice(index, 1)
+                }
+            }
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="css/myCart.css">
+    <script src="../js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id='app'>
+        <my-cart></my-cart>
+    </div>
+
+    <hr>
+    <img src="img/40-1.png" alt="" class="mb-2">
+    <img src="img/40-2.png" alt="" class="mb-2">
+
+    <script>
+        var CarHeader = {
+            props: ['uname'],
+            template: `
+            <div class="my-cart-header">
+                <h3>{{uname}}的購物車</h3>
+            </div>
+            `
+        }
+        var CarBody = {
+            template: `
+            <div class="my-cart-body">
+                <div class="item">
+                    <div>
+                        <div></div>
+                        <div>產品1：單價100萬</div>
+                    </div>
+                    <div>
+                        <a href="#">-</a>
+                        <input type="number" name="" id="" style="width: 40px;height: 20px;text-align: center;">
+                        <a href="#">+</a>
+                    </div>
+                    <div>
+                        <a href="#">&times;</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <div></div>
+                        <div>產品2：單價200萬</div>
+                    </div>
+                    <div>
+                        <a href="#">-</a>
+                        <input type="number" name="" id="" style="width: 40px;height: 20px;text-align: center;">
+                        <a href="#">+</a>
+                    </div>
+                    <div>
+                        <a href="#">&times;</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <div></div>
+                        <div>產品3：單價300萬</div>
+                    </div>
+                    <div>
+                        <a href="#">-</a>
+                        <input type="number" name="" id="" style="width: 40px;height: 20px;text-align: center;">
+                        <a href="#">+</a>
+                    </div>
+                    <div>
+                        <a href="#">&times;</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <div></div>
+                        <div>產品4：單價400萬</div>
+                    </div>
+                    <div>
+                        <a href="#">-</a>
+                        <input type="number" name="" id="" style="width: 40px;height: 20px;text-align: center;">
+                        <a href="#">+</a>
+                    </div>
+                    <div>
+                        <a href="#">&times;</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>
+                        <div></div>
+                        <div>產品5：單價500萬</div>
+                    </div>
+                    <div>
+                        <a href="#">-</a>
+                        <input type="number" name="" id="" style="width: 40px;height: 20px;text-align: center;">
+                        <a href="#">+</a>
+                    </div>
+                    <div>
+                        <a href="#">&times;</a>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+        var CarFooter = {
+            template: `
+            <div class="my-cart-footer">
+                <span>總價：123</span>
+                <button>結算</button>
+            </div>
+            `
+        }
+        Vue.component('my-cart', {
+            data: function() {
+                return {
+                    uname: '劉德華'
+                }
+            },
+            template: `
+            <div class='my-cart'>
+                <car-header :uname='uname'></car-header>
+                <car-body></car-body>
+                <car-footer></car-footer>
+            </div>
+            `,
+            components: {
+                'car-header': CarHeader,
+                'car-body': CarBody,
+                'car-footer': CarFooter
+            }
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>
